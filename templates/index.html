@@ -1,0 +1,52 @@
+{%extends 'includes/layout.html'%}
+
+
+{% block body %}
+<div class="jumbotron">
+    <div class="container ">
+        <p>Please select an image cnd click submit button.</p>
+        <form method="post" action="/" enctype="multipart/form-data">
+            <dl>
+                <p>
+                    <input type="file" name="file" autocomplete="off" required>
+                </p>
+            </dl>
+            <p>
+                <input type="submit" value="Submit" class="bg-primary">
+            </p>
+        </form>
+    </div>
+  </div>
+  <div class="container-fluid bg-3 text-center">
+    <p>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </p>
+    {% if filename %}
+        <div class="col-sm-6">
+            <h4>Input Image</h4>
+            <img src="{{ url_for('display_image', filename=filename) }}" class="img-responsive" style="width:100%" alt="Image">
+        </div>
+    {% endif %}
+    {% if converted_text %}
+    <div class="col-sm-6">
+        <h4>Extracted Text</h4>
+        
+{%for i in range(0, len)%}
+ 
+{{converted_text[i] | safe }}
+
+{%endfor%}
+        
+    </div>
+    {% endif %}
+  </div>
+  
+  {% endblock%}
